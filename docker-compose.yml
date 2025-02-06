@@ -11,11 +11,15 @@ services:
       - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
 
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
+    networks:
+      - backend
 
   django:
     build: .
@@ -27,6 +31,11 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      - backend
+    environment:
+      - DATABASE_URL=postgres://django:django_password@db:5432/django
+      - REDIS_URL=redis://redis:6379/0
 
   celery_worker:
     build: .
@@ -34,9 +43,11 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - django
-      - redis
       - db
+      - redis
+      - django
+    networks:
+      - backend
 
   celery_beat:
     build: .
@@ -44,9 +55,15 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - django
-      - redis
       - db
+      - redis
+      - django
+    networks:
+      - backend
 
 volumes:
   postgres_data:
+
+networks:
+  backend:
+    driver: bridge
