@@ -16,7 +16,7 @@ Utilizará los puertos:
 
 Django en el puerto 8100
 
-PostgreSQL en el puerto 5433
+PostgreSQL en el puerto 5434
 
 Redis en el puerto 6379
 
