@@ -13,7 +13,7 @@ docker compose build
 
 docker compose up
 
-## 3. Acceder al endpoint REST:
+## 4. Acceder al endpoint REST:
 
 Ver listado de todos los países: http://localhost:8100/api/countries
 
