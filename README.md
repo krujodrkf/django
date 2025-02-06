@@ -2,7 +2,7 @@
 
 git clone https://github.com/krujodrkf/django.git
 
-cd django
+cd django/countries_project/
 
 ## 2.  Construir y levantar el entorno utilizando Docker
 
