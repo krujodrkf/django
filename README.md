@@ -11,12 +11,13 @@ docker-compose build
 
 ## 3.  Desplegar el proyecto
 
-En **abrir una consola neuva** ir a la carpeta del proyecto countries_project y hacer:
+En **abrir una consola nuevaa** ir a la carpeta del proyecto countries_project y hacer:
 
 docker-compose up
 
 ## 3. Acceder al endpoint REST:
 
 Ver listado de todos los países: http://localhost:8100/api/countries
+
 Ver un país en particular: http://localhost:8100/api/countries/{id}
  
