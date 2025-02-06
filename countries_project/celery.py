@@ -28,4 +28,4 @@ app.conf.beat_schedule = {
 app.conf.beat_max_loop_interval = 5  # Esto asegura que Celery Beat no limite la ejecución a 5 minutos
 
 # Habilitar una frecuencia de ejecución menor de 5 minutos
-app.conf.timezone = 'UTC'
+app.conf.timezone = '-3UTC'
