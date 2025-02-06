@@ -11,7 +11,7 @@ docker-compose build
 
 ## 3.  Desplegar el proyecto
 
-En **abrir una consola nuevaa** ir a la carpeta del proyecto countries_project y hacer:
+En **abrir una consola nueva** ir a la carpeta del proyecto countries_project y hacer:
 
 docker-compose up
 
