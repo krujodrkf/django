@@ -139,7 +139,7 @@ INSTALLED_APPS += ['django_celery_beat',]
 CELERY_BEAT_SCHEDULE = {
     'update-country-data-every-hour': {
         'task': 'countries_project.tasks.update_country_data',
-        'schedule': 5.0,  # Ejecución cada 3600 segundos (1 hora)
+        'schedule': 3600.0,  # Ejecución cada 3600 segundos (1 hora)
     },
 }
 
