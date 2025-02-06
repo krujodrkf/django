@@ -1,0 +1,7 @@
+django
+djangorestframework
+requests
+celery
+django-celery-beat
+psycopg2
+redis
