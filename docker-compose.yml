@@ -1,4 +1,8 @@
-version: '3.7'
+networks:
+  backend:
+    driver: bridge
+  db:
+    driver: bridge
 
 services:
   db:
@@ -12,7 +16,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - backend
+      - db
 
   redis:
     image: redis:alpine
@@ -32,6 +36,7 @@ services:
       - db
       - redis
     networks:
+      - db
       - backend
     environment:
       - DATABASE_URL=postgres://django:django_password@db:5432/django
@@ -63,7 +68,3 @@ services:
 
 volumes:
   postgres_data:
-
-networks:
-  backend:
-    driver: bridge
