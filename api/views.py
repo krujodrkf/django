@@ -4,6 +4,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from time import sleep
 from .models import Country
+from rest_framework.generics import ListAPIView,RetrieveAPIView
+from .serializers import CountrySerializer
+from rest_framework.permissions import AllowAny
+from rest_framework import filters
+
+
+
 
 class CountryList(APIView):
     """
@@ -118,3 +125,28 @@ class CountryList(APIView):
                     # Si aún quedan intentos, esperar un tiempo antes de reintentar
                     sleep(retry_delay)
                     continue  # Reintentar en caso de error temporal
+
+
+class CountryListView(ListAPIView):
+    serializer_class = CountrySerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        """
+        Este método filtra los países por `id` si se pasa en la URL, 
+        de lo contrario devuelve todos los países.
+        """
+        country_id = self.kwargs.get('id')  # Obtener el `id` de la URL
+        if country_id:
+            # Filtrar solo por el país con el `id` especificado
+            return Country.objects.filter(id=country_id)
+        else:
+            # Si no se pasa `id`, devuelve todos los países
+            return Country.objects.all()
+        
+
+class CountryDetailView(RetrieveAPIView):
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'id'  # Esto es importante si usas 'id' como clave en la URL
