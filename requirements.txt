@@ -3,5 +3,5 @@ djangorestframework
 requests
 celery
 django-celery-beat
-psycopg2
+psycopg2-binary
 redis
