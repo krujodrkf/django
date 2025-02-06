@@ -1,11 +1,11 @@
 networks:
   backend:
     driver: bridge
-  db:
-    driver: bridge
 
 services:
+  
   db:
+    container_name: pgdb
     image: postgres:13
     environment:
       POSTGRES_DB: django
@@ -16,9 +16,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - db
+      - backend
 
   redis:
+    container_name: redis
     image: redis:alpine
     ports:
       - "6379:6379"
@@ -26,8 +27,8 @@ services:
       - backend
 
   django:
+    container_name: django_app
     build: .
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8100"]
     volumes:
       - .:/app
     ports:
@@ -36,13 +37,13 @@ services:
       - db
       - redis
     networks:
-      - db
       - backend
     environment:
       - DATABASE_URL=postgres://django:django_password@db:5432/django
       - REDIS_URL=redis://redis:6379/0
 
   celery_worker:
+    container_name: celery_worker
     build: .
     command: celery -A countries_project worker --loglevel=info
     volumes:
@@ -55,6 +56,7 @@ services:
       - backend
 
   celery_beat:
+    container_name: celery_beat
     build: .
     command: celery -A countries_project beat --loglevel=info
     volumes:
