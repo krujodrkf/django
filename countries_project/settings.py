@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
+    'countries_project',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Usando Redis como broker, asegúrate de tener Redis corriendo
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = 'UTC'  # Ajusta a tu zona horaria si es necesario
+INSTALLED_APPS += ['django_celery_beat',]
+
+# Configuración para Celery Beat
+CELERY_BEAT_SCHEDULE = {
+    'update-country-data-every-hour': {
+        'task': 'countries_project.tasks.update_country_data',
+        'schedule': 5.0,  # Ejecución cada 3600 segundos (1 hora)
+    },
+}
+
+API_BASE_URL = 'http://localhost:8100' 
