@@ -6,14 +6,12 @@ git clone https://github.com/krujodrkf/django.git
 
 cd django/countries_project/
 
-docker-compose build
+docker compose build
 
 
 ## 3.  Desplegar el proyecto
 
-En **abrir una consola nueva** ir a la carpeta del proyecto countries_project y hacer:
-
-docker-compose up
+docker compose up
 
 ## 3. Acceder al endpoint REST:
 
