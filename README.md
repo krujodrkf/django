@@ -19,6 +19,9 @@ Ejecutar docker ps y copiar el Container ID de la imagen llamada django_django
 
 docker exec -t -i {containerId} bash
 
+python manage.py shell
+
+
 En la shell de Python:
 
 from countries_project.tasks import update_country_data
