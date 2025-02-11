@@ -17,8 +17,8 @@ def update_country_data():
 
     for attempt in range(retries):
         try:
-            with transaction.atomic():
-                transaction.on_commit(lambda: transaction.get_connection().cursor().execute("SELECT pg_advisory_lock(123456)"))
+            with transaction.atomic(): # Se utiliza una transacción para evitar que se realicen cambios en la base de datos si ocurre un error.
+                transaction.on_commit(lambda: transaction.get_connection().cursor().execute("SELECT pg_advisory_lock(123456)")) # Se utiliza un lock para evitar que se realicen cambios en la base de datos mientras se actualizan los datos.
 
                 respuesta = requests.get(url)
                 respuesta.raise_for_status()
@@ -92,7 +92,7 @@ def update_country_data():
                 return {"errors": "\n".join(error_messages)}
 
         except requests.RequestException:
-            if attempt == retries - 1:
+            if attempt == retries - 1: # Si se llega al último intento y no se pudo obtener la información, se muestra un mensaje de error.
                 print("🚨 Error: No se pudo obtener la información de los países.")
             else:
                 print(f"🔄 Reintentando en {retry_delay} segundos...")
